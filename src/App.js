@@ -2,44 +2,40 @@ import React, { useEffect, useState } from "react";
 
 function App() {
 
-  const [taskList, setTasklist] =useState([
-    { "id":"83453421", "taskContent":"asdf" },
-    { "id":"97679876", "taskContent":"qwer" }, 
-    { "id":"12349767", "taskContent":"cfrk" }
+  const [taskList, setTaskList] =useState([
+    { "id":"83453421", "taskContent":"asodf" },
+    { "id":"97679876", "taskContent":"qwier" }, 
+    { "id":"12349767", "taskContent":"cfurk" }
   ])
    const [newTaskItem, updateNewTaskItem] = useState("")
 
-   let addNewTaskToList = function (taskItem) {
+   let addNewTaskToList = function(taskItem) {
      let taskListCopy = [...taskList]
-     taskListCopy.push(taskItem)
+     let taskItemObj = {"id": Math.floor(Date.now() / 1000), "taskContent": taskItem }
+     taskListCopy.push(taskItemObj)
+     updateNewTaskItem("")
     setTaskList(taskListCopy)
     console.log(taskList)
    }
 
-   let deleteTaskFormList = function(TaskItemId)
+   let deleteTask = function(taskId) {
+    let taskListCopy = [...taskList]
+    let shortenedTaskList = taskListCopy.filter(taskListItem => taskListItem.id !==taskId)
+    console.log(shortenedTaskList)
+   }
 
-//   super(props)
-  //  this.state = {
-   //    taskList: [
-   //   "Tehtävä 1",
-   //   "Tehtävä 2",
-   //    "Tehtävä 3"
-   // ]
-   // }
-
-return ( 
+   return ( 
 
     <div className="App">
 
       <input type="text" value={newTaskItem} onChange={ (e) => updateNewTaskItem(e.target.value) } />
       <input type="button" value="Lisää taski" onClick={() => addNewTaskToList(newTaskItem) } />      
       
-    { taskList.map( (singleTask) => <p>{singleTask.taskContent}</p>) }
+    { taskList.map( (singleTask) => <p>{singleTask.taskContent} <button onClick={() => deleteTask(singleTask.id)}>x</button></p>) }
 
-    //  <button type="button" onClick="{() =>increaseCounter(counter + 1)}">Laskurin arvo {counter}</button> 
-    </div>
+    {/* <input type="button" value="Lisää taski" onClick={() => addNewTaskToList(newTaskItem) }/> */}
+ </div>
  );
-
- 
+}
 
 export default App;
